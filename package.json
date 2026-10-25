@@ -1,0 +1,28 @@
+{
+  "name": "control-thing",
+  "version": "0.1.0",
+  "description": "A swipe-down control shade for DeskThing",
+  "type": "module",
+  "author": "HyperXcess",
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test mission.test.mjs && node shade-gestures.test.cjs",
+    "package": "node tools/package.mjs"
+  },
+  "dependencies": {
+    "@deskthing/server": "0.11.6",
+    "@deskthing/types": "0.11.6"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  },
+  "homepage": "https://github.com/joesanta/ControlThing",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joesanta/ControlThing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joesanta/ControlThing/issues"
+  }
+}

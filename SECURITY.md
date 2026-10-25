@@ -1,0 +1,1 @@
+Do not include calendar feed URLs, tokens, account details, or personal event data in issues. Report vulnerabilities privately through GitHub security advisories when available. This project has no telemetry.

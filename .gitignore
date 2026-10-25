@@ -1,0 +1,10 @@
+node_modules/
+dist/
+release/
+.DS_Store
+*.backup*
+*.log
+.env*
+swift-cache/
+audio-control
+private/

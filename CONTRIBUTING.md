@@ -1,0 +1,1 @@
+Run `npm ci` then `npm test` before proposing a change. Keep device identifiers and personal settings out of commits. Describe the tested DeskThing server/client versions. Use synthetic events for screenshots and tests.
