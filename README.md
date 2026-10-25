@@ -15,9 +15,19 @@ Swipe sideways between pages and up to close. The dial selects tiles when the sh
 
 ControlThing has **two parts**: a normal DeskThing backend app and a client extension for the overlay. Both are required. It is not a firmware replacement. CalThing and LaunchThing are optional; the calendar tile has no next event until CalThing provides a local snapshot.
 
+## Install from the DeskThing store
+
+1. Open **Downloads → Add Client/App** in the left sidebar.
+2. Add this repository’s GitHub URL as an **App** repository.
+3. Refresh/pull the repository, select the app, download it, and initialize it.
+4. The declared post-install step backs up and stages the client integration. It does not change account credentials, calendar settings, or firmware. It supports the DeskThing 0.11.2 modern/legacy client bundles and stops before writing if either layout is unsupported.
+5. Open **Clients → Push staged client**, then **Restart Chromium on the Device** to activate the client UI changes.
+
+The release includes a separate **`latest.json`** with DeskThing metadata, a version-pinned runtime download URL, embedded icon, size, and SHA-512 checksum. The ZIP named with the lowercase internal app ID is the installable runtime. The capitalized `ControlThing-source-…zip` archive is for development, not installation.
+
 ## Install the backend (Apple Silicon Mac)
 
-1. Download `ControlThing-v0.1.1.zip` from **Releases**.
+1. Download `controlthing-v0.1.2.zip` from **Releases**.
 2. In DeskThing, choose **Downloads → Apps → Upload App**. Initialize ControlThing.
 3. In **Apps → ControlThing → Settings**, optionally enter the exact name of a macOS Shortcut. No Shortcut runs on startup; it runs only when you tap **Focus Shortcut**.
 4. Leave USB serial blank if exactly one Car Thing is connected. If several ADB devices are attached, specify the intended Car Thing serial.
@@ -29,7 +39,7 @@ The backend uses macOS `pmset`, `memory_pressure`, a bundled CoreAudio helper, a
 
 Tested on DeskThing Server **0.11.17**, client **0.11.2**, and a Spotify Car Thing running Thing Labs firmware. The client extension targets the exact 0.11.2 bundle layout; the installer refuses unknown layouts. DeskThing/client updates can replace the extension, so reapply it after a compatible update. No firmware flashing is included.
 
-## Client extension installation (Mac)
+## Manual client extension installation (Mac, optional alternative)
 
 Install Node.js 20 or newer. Quit DeskThing while changing its staged client. In this repository, run:
 
