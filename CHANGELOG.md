@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+Include DeskThing’s generic `mac` platform identifier alongside `macarm`, avoiding a false incompatibility warning on supported Apple Silicon Macs.
+
 ## 0.1.2
 
 - Add DeskThing store discovery via a separate `latest.json` release asset, embedded icon, size, and SHA-512 checksum.

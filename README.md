@@ -27,11 +27,11 @@ The release includes a separate **`latest.json`** with DeskThing metadata, a ver
 
 ## Install the backend (Apple Silicon Mac)
 
-1. Download `controlthing-v0.1.2.zip` from **Releases**.
+1. Download `controlthing-v0.1.3.zip` from **Releases**.
 2. In DeskThing, choose **Downloads → Apps → Upload App**. Initialize ControlThing.
 3. In **Apps → ControlThing → Settings**, optionally enter the exact name of a macOS Shortcut. No Shortcut runs on startup; it runs only when you tap **Focus Shortcut**.
 4. Leave USB serial blank if exactly one Car Thing is connected. If several ADB devices are attached, specify the intended Car Thing serial.
-5. Install the client extension below, then swipe from the top edge.
+5. The post-install step stages the shade. Push the staged client to the device, restart its browser, then swipe from the top edge. The manual installer below is an alternative.
 
 The backend uses macOS `pmset`, `memory_pressure`, a bundled CoreAudio helper, and DeskThing’s bundled ADB executable. Brightness requires a USB-connected Car Thing. CoreAudio support in the published binary is **Apple Silicon, macOS 13+**. Windows, Linux, and Intel Mac behavior has not been validated. Missing optional hardware/services show unavailable state rather than fabricated values.
 
