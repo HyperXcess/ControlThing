@@ -1,4 +1,4 @@
-# Control Thing
+# ControlThing
 
 [Download releases](https://github.com/joesanta/ControlThing/releases) · [Report a problem](https://github.com/joesanta/ControlThing/issues)
 
@@ -13,13 +13,13 @@ Pull down from the top edge to reveal a sliding shade with two pages:
 
 Swipe sideways between pages and up to close. The dial selects tiles when the shade is open. Your underlying app remains available when you close it.
 
-Control Thing has **two parts**: a normal DeskThing backend app and a client extension for the overlay. Both are required. It is not a firmware replacement. CalThing and LaunchThing are optional; the calendar tile has no next event until CalThing provides a local snapshot.
+ControlThing has **two parts**: a normal DeskThing backend app and a client extension for the overlay. Both are required. It is not a firmware replacement. CalThing and LaunchThing are optional; the calendar tile has no next event until CalThing provides a local snapshot.
 
 ## Install the backend (Apple Silicon Mac)
 
-1. Download `ControlThing-v0.1.0.zip` from **Releases**.
-2. In DeskThing, choose **Downloads → Apps → Upload App**. Initialize Control Thing.
-3. In **Apps → Control Thing → Settings**, optionally enter the exact name of a macOS Shortcut. No Shortcut runs on startup; it runs only when you tap **Focus Shortcut**.
+1. Download `ControlThing-v0.1.1.zip` from **Releases**.
+2. In DeskThing, choose **Downloads → Apps → Upload App**. Initialize ControlThing.
+3. In **Apps → ControlThing → Settings**, optionally enter the exact name of a macOS Shortcut. No Shortcut runs on startup; it runs only when you tap **Focus Shortcut**.
 4. Leave USB serial blank if exactly one Car Thing is connected. If several ADB devices are attached, specify the intended Car Thing serial.
 5. Install the client extension below, then swipe from the top edge.
 

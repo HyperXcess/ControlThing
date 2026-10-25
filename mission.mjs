@@ -16,7 +16,7 @@ export function finishFocus(focus,now=Date.now(),day){
 }
 export function createMission(){
  let deviceSerial="";
- async function serial(settings){const configured=String(settings.device_serial?.value||"").trim();const text=(await run(ADB,["devices"])).stdout;const devices=text.split(/\r?\n/).map(line=>line.match(/^(\S+)\s+device$/)).filter(Boolean).map(match=>match[1]);if(configured){if(!devices.includes(configured))throw Error("Configured Car Thing is not connected.");return deviceSerial=configured;}if(devices.length!==1)throw Error("Connect one Car Thing, or set its USB serial in Control Thing settings.");return deviceSerial=devices[0];}
+ async function serial(settings){const configured=String(settings.device_serial?.value||"").trim();const text=(await run(ADB,["devices"])).stdout;const devices=text.split(/\r?\n/).map(line=>line.match(/^(\S+)\s+device$/)).filter(Boolean).map(match=>match[1]);if(configured){if(!devices.includes(configured))throw Error("Configured Car Thing is not connected.");return deviceSerial=configured;}if(devices.length!==1)throw Error("Connect one Car Thing, or set its USB serial in ControlThing settings.");return deviceSerial=devices[0];}
  let focus={duration:25*60,remaining:25*60,end:null,completed:{},finished:false},loaded=false,lastCPU=cpuSample(os.cpus()),audio={devices:[],current:0},shortcuts=[],lastAudio=0,brightness=null,brightnessMax=255;
  let busy=false,cached=null,lastStats=0,stats={cpu:null,memoryAvailable:null,battery:null,power:''};
  const save=()=>writeFile(stateFile,JSON.stringify(focus),{mode:0o600}).catch(()=>{});
@@ -48,7 +48,7 @@ export function createMission(){
   } else if(command==='audio'){
    const id=Number(value);if(!Number.isInteger(id)||!audio.devices.some(d=>d.id===id))throw Error('Select an available output.');audio=JSON.parse((await run(helper,['set',String(id)])).stdout);
   } else if(command==='shortcut'){
-   const name=String(settings.focus_shortcut?.value||'').trim();if(!name)throw Error('Set a focus Shortcut name in Control Thing settings first.');
+   const name=String(settings.focus_shortcut?.value||'').trim();if(!name)throw Error('Set a focus Shortcut name in ControlThing settings first.');
    const names=(await run('/usr/bin/shortcuts',['list'])).stdout.trim().split('\n');if(!names.includes(name))throw Error('That Shortcut was not found on the Mac.');await run('/usr/bin/shortcuts',['run',name]);
   }else throw Error('Unknown control.');
  }

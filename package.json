@@ -1,6 +1,6 @@
 {
-  "name": "control-thing",
-  "version": "0.1.0",
+  "name": "controlthing",
+  "version": "0.1.1",
   "description": "A swipe-down control shade for DeskThing",
   "type": "module",
   "author": "HyperXcess",
