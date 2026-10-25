@@ -1,6 +1,6 @@
 # ControlThing
 
-[Download releases](https://github.com/joesanta/ControlThing/releases) · [Report a problem](https://github.com/joesanta/ControlThing/issues)
+[Download releases](https://github.com/HyperXcess/ControlThing/releases) · [Report a problem](https://github.com/HyperXcess/ControlThing/issues)
 
 **A swipe-down dashboard for your Car Thing.** By HyperXcess.
 

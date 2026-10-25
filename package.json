@@ -17,12 +17,12 @@
   "devDependencies": {
     "esbuild": "0.28.2"
   },
-  "homepage": "https://github.com/joesanta/ControlThing",
+  "homepage": "https://github.com/HyperXcess/ControlThing",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joesanta/ControlThing.git"
+    "url": "https://github.com/HyperXcess/ControlThing.git"
   },
   "bugs": {
-    "url": "https://github.com/joesanta/ControlThing/issues"
+    "url": "https://github.com/HyperXcess/ControlThing/issues"
   }
 }
