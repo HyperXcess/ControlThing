@@ -2,18 +2,19 @@
 
 [Download releases](https://github.com/HyperXcess/ControlThing/releases) · [Report a problem](https://github.com/HyperXcess/ControlThing/issues)
 
-**A swipe-down dashboard for your Car Thing.** By HyperXcess.
+**A swipe-down dashboard for your Car Thing.**
 
-Pull down from the top edge to reveal a sliding shade with two pages:
+Pull down from the top edge to reveal a sliding shade with five pages:
 
-- **Mac Health** — CPU, available memory, battery, and power status.
-- **Your Day** — the next event from an optional CalThing installation.
-- **Focus** — persistent focus timer, pause/reset, duration presets, and completed-block count. The countdown ticks every second locally, independently of slower stats updates.
-- **Quick Controls** — Car Thing brightness, Mac audio output selection, and an optional named macOS Shortcut.
+- **PC Health** — a full-width dashboard with large CPU, memory-in-use, and battery meters. The current backend reads a Mac; the name does not imply Windows support.
+- **Your Day** — the next three upcoming or ongoing timed events from CalendarThing, with an Open CalendarThing button.
+- **Focus** — a full-width countdown, large Start/Pause and Reset buttons, preset or custom 1–120 minute sessions, and completed-block count. The countdown ticks every second locally, independently of slower stats updates.
+- **Brightness** — a full-width screen control with a large percentage, slider, and low/high buttons.
+- **Audio** — a separate full-width Mac volume control and output-device selector. Fixed-volume outputs show an unavailable slider.
 
-Swipe sideways between pages and up to close. The dial selects tiles when the shade is open. Your underlying app remains available when you close it.
+Tap the bottom icon-and-label buttons to open a section. Swipe the button strip to browse it without changing the active section. Swipe sideways on the dashboard to change pages, or up to close. Click the dial on Brightness or Audio to engage the slider, turn to adjust, and click again to finish. The dial selects tiles when the shade is open. Your underlying app remains available when you close it.
 
-ControlThing has **two parts**: a normal DeskThing backend app and a client extension for the overlay. Both are required. It is not a firmware replacement. CalThing and LaunchThing are optional; the calendar tile has no next event until CalThing provides a local snapshot.
+ControlThing has **two parts**: a normal DeskThing backend app and a client extension for the overlay. Both are required. It is not a firmware replacement. CalendarThing and LaunchThing are optional; the calendar tile has no next event until CalendarThing provides a local snapshot.
 
 ## Install from the DeskThing store
 
@@ -27,13 +28,17 @@ The release includes a separate **`latest.json`** with DeskThing metadata, a ver
 
 ## Install the backend (Apple Silicon Mac)
 
-1. Download `controlthing-v0.1.3.zip` from **Releases**.
+1. Download `controlthing-v0.2.0.zip` from **Releases**.
 2. In DeskThing, choose **Downloads → Apps → Upload App**. Initialize ControlThing.
-3. In **Apps → ControlThing → Settings**, optionally enter the exact name of a macOS Shortcut. No Shortcut runs on startup; it runs only when you tap **Focus Shortcut**.
+3. In **Apps → ControlThing → Settings**, configure USB reconnect recovery if needed. The old Shortcut tile has been removed; its saved setting is retained only for compatibility.
 4. Leave USB serial blank if exactly one Car Thing is connected. If several ADB devices are attached, specify the intended Car Thing serial.
 5. The post-install step stages the shade. Push the staged client to the device, restart its browser, then swipe from the top edge. The manual installer below is an alternative.
 
 The backend uses macOS `pmset`, `memory_pressure`, a bundled CoreAudio helper, and DeskThing’s bundled ADB executable. Brightness requires a USB-connected Car Thing. CoreAudio support in the published binary is **Apple Silicon, macOS 13+**. Windows, Linux, and Intel Mac behavior has not been validated. Missing optional hardware/services show unavailable state rather than fabricated values.
+
+## Manual brightness
+
+A brightness change stops the firmware ambient-light backlight service and saves the selected raw level in `/var/lib/controlthing/brightness` before applying it. This prevents the ambient sensor from replacing the manual value during the current boot. Persistent manual mode across reboots additionally requires disabling the firmware backlight service’s autostart and configuring a one-shot restore from that saved file; the app package does not silently rewrite the device’s supervisor configuration.
 
 ## Compatibility
 
@@ -80,7 +85,7 @@ Choose your actual editable profile; the script rejects the default profile and 
 
 ## Data and privacy
 
-Focus state stays in local `data/controlthing-focus.json`. CalThing optionally writes local `data/calthing-events.json`, which this backend reads only while requesting a snapshot; it ignores snapshots older than 15 minutes. No Google feed links or OAuth tokens are read by this app. Data goes to your connected DeskThing client, not to HyperXcess. A configured Shortcut can do whatever that Shortcut is configured to do; only the exact saved name is run, using argument arrays rather than shell interpolation.
+Focus state stays in local `data/controlthing-focus.json`. CalendarThing optionally writes local `data/calthing-events.json`, which this backend reads only while requesting a snapshot; it ignores snapshots older than 15 minutes. No Google feed links or OAuth tokens are read by this app. Data goes to your connected DeskThing client, not to HyperXcess. A configured Shortcut can do whatever that Shortcut is configured to do; only the exact saved name is run, using argument arrays rather than shell interpolation.
 
 ## Build and test
 
@@ -96,3 +101,17 @@ Building the macOS helper requires Apple’s Command Line Tools and Swift. On ot
 ## License and credit
 
 MIT. Uses DeskThing SDKs and integrates with DeskThing Client. See `THIRD_PARTY_NOTICES.md`.
+
+## USB reconnect recovery
+
+On macOS, ControlThing checks its recognized USB-connected Car Thing every 15 seconds while DeskThing is running. If the device's local DeskThing server listener disappears after a reconnect or reboot, it restores the existing ADB reverse link on port 8891. It also restores the previously configured Spotify relay link on port 8892 when needed and corrects a reset device clock. Healthy connections are left unchanged. It does not restart Chromium, reboot the device, kill ADB, or invoke `adb reverse --list` (unsafe with this device's old adbd).
+
+Recovery is enabled by default under **Automatically restore USB connection** in ControlThing settings. Disable that setting to stop checks. Multiple recognized Car Things require an explicit **Car Thing USB serial**. Unrelated Android devices are ignored. This recovers missing USB tunnels; it cannot prevent a physical power interruption or diagnose every browser crash.
+
+## Automatic clock overlay
+
+The client integration disables the stock disconnected/idle screensaver overlay. A connection drop leaves the app visible with its connection warning; the automatic clock cannot take over. Manually opening a clock app remains possible.
+
+## MusicThing entry
+
+With [MusicThing](https://github.com/HyperXcess/MusicThing) installed, the bottom waveform tab opens it by tap or upward pull. The pull has a finger-follow preview; a short pull cancels. The entry disappears inside MusicThing, whose Back button returns to the previous app. The top edge remains reserved for ControlThing. MusicThing is a separate app, not included in this package.

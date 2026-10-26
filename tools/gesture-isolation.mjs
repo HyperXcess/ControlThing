@@ -1,0 +1,9 @@
+// Client 0.11.2: remove the invisible top volume hit target and reserve MusicThing's screen.
+export function isolationEdits(spec){const modern=spec.file==='index-BoMDv8nD.js',view=modern?'s':'n',jsx=modern?'u':'m',volume=modern?'pm':'mr',button=modern?'de':'Gt',pref=modern?'$':'bt',arg=modern?'o':'e';return[
+ {anchor:modern?'!c&&u.jsx(vm,{})':'!r&&m.jsx(yr,{})',replacement:'/*automatic-screensaver-disabled*/null',marker:'/*automatic-screensaver-disabled*/'},
+ {anchor:spec.method,replacement:spec.method+`/*music-open-context*/if(${arg}.id==="open"&&${arg}.value==="musicthing"){const current=${pref}.getState().preferences.currentView.name;if(current!=="musicthing")window.__hyperMusicReturnApp=current;}`,marker:'/*music-open-context*/'},
+ {anchor:`${jsx}.jsx(${volume},{})`,replacement:'/*edge-volume-removed*/null',marker:'/*edge-volume-removed*/'},
+ {anchor:`${view}.onboarding&&${view}.miniplayer.visible&&`,replacement:`${view}.onboarding&&${view}.miniplayer.visible&&${view}.currentView.name!=="musicthing"&&/*music-no-player-padding*/`,marker:'/*music-no-player-padding*/'},
+ {anchor:`${view}.miniplayer.visible&&${view}.onboarding&&`,replacement:`${view}.miniplayer.visible&&${view}.onboarding&&${view}.currentView.name!=="musicthing"&&/*music-no-mini-player*/`,marker:'/*music-no-mini-player*/'},
+ {anchor:spec.method,replacement:spec.method+`/*music-return*/if(${arg}.id==="music-dismiss"){const previous=window.__hyperMusicReturnApp||"spotify";window.__hyperMusicReturnApp=null;${button}.getState().executeAction({id:"open",source:"server",value:previous,enabled:true});return;}`,marker:'/*music-return*/'}];}
+export function isolate(source,edits){if(!source.includes('miniplayer:{state:'))return source;for(const edit of edits){if(source.includes(edit.marker))continue;if(!source.includes(edit.anchor))throw Error('Unsupported gesture layout; no files changed.');source=source.replace(edit.anchor,edit.replacement)}return source}

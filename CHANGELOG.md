@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0 — 2026-10-26
+
+Larger PC Health, Focus, Brightness and Audio pages; next-three-event CalendarThing overview; adjustable focus duration; dial-engaged sliders; swipeable icon-and-label navigation; contextual MusicThing entry; and bounded USB reconnect recovery.
+
 ## 0.1.3
 
 Include DeskThing’s generic `mac` platform identifier alongside `macarm`, avoiding a false incompatibility warning on supported Apple Silicon Macs.

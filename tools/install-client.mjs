@@ -1,3 +1,4 @@
+import {isolationEdits,isolate} from './gesture-isolation.mjs';
 import {readFile,writeFile,readdir,mkdir,copyFile} from 'node:fs/promises';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -13,6 +14,7 @@ const {code}=await transform('var REPLACEMENT='+template,{target:'chrome69',mini
 if(source.includes(spec.name+'=')){const start=source.indexOf(','+spec.name+'='),end=source.indexOf(spec.boundary,start);if(start<0||end<0)throw Error('Shade boundaries missing');source=source.slice(0,start)+','+spec.name+'='+expression+source.slice(end);}
 else{if(!source.includes(spec.boundary)||!source.includes(spec.root)||!source.includes(spec.method))throw Error('Unsupported client bundle (tested with client 0.11.2 only)');source=source.replace(spec.boundary,','+spec.name+'='+expression+spec.boundary);source=source.replace(spec.root,'children:['+spec.aliases.JSX+'.jsx('+spec.name+',{}),'+spec.root.slice('children:['.length));const x=spec.argument;source=source.replace(spec.method,spec.method+'if('+x+'.id==="mission-show"||'+x+'.id==="mission-hide"){window.dispatchEvent(new CustomEvent("hyper-mission",{detail:'+x+'.id==="mission-show"?"show":"hide"}));return;}');}
 
+ source=isolate(source,isolationEdits(spec));
  await transform(source,{target:'chrome69',loader:'js'});
  changes.push({path,source,original});
 }

@@ -14,6 +14,7 @@ for(const spec of config.specs){const path=join(assets,spec.file),original=await
  }else if(config.feature==='calendar'){
   if(!source.includes('/*calendar-dial*/')){if(!source.includes(spec.wheelPrefix))throw Error('Unsupported client wheel handler; no files changed. Tested with client 0.11.2 only.');const e=spec.event;const insert=`/*calendar-dial*/if(${spec.pref}.getState().preferences.currentView.name==="agenda"&&!${spec.wheel}.getState().wheelState){const delta=Math.abs(${e}.deltaX)>Math.abs(${e}.deltaY)?${e}.deltaX:${e}.deltaY;const frame=Array.from(document.querySelectorAll("iframe")).find(frame=>/\\/app\\/agenda(?:[/?#]|$)/.test(frame.src));if(frame&&frame.contentWindow){frame.contentWindow.postMessage({source:"deskthing",type:"calendar-dial",payload:{direction:delta===0?0:delta>0?1:-1}},new URL(frame.src).origin);return;}}`;source=source.replace(spec.wheelPrefix,spec.wheelPrefix.replace('return;','return;'+insert));}
  }else throw Error('Unknown client integration.');
+ if(source.includes('miniplayer:{state:'))for(const edit of spec.isolationEdits||[]){if(source.includes(edit.marker))continue;if(!source.includes(edit.anchor))throw Error('Unsupported gesture layout; no files changed.');source=source.replace(edit.anchor,edit.replacement)}
  changes.push({path,original,source});
 }
 // All supported-layout checks finish before any writes. Roll back changed files on a write failure.

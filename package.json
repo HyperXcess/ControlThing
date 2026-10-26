@@ -1,13 +1,13 @@
 {
   "name": "controlthing",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "A swipe-down control shade for DeskThing",
   "type": "module",
   "author": "HyperXcess",
   "license": "MIT",
   "scripts": {
     "build": "node build.mjs",
-    "test": "node build.mjs && node --test mission.test.mjs postinstall.test.mjs release.test.mjs && node shade-gestures.test.cjs",
+    "test": "node build.mjs && node --test mission.test.mjs usb-link.test.mjs gesture-isolation.test.mjs postinstall.test.mjs release.test.mjs && node shade-gestures.test.cjs && node dial.test.cjs && node duration.test.cjs",
     "package": "node tools/package.mjs"
   },
   "dependencies": {

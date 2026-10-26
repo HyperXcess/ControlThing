@@ -22,5 +22,26 @@ if args.count==3 && args[1]=="set",let id=UInt32(args[2]),outputs().contains(whe
 }
 var a=address(kAudioHardwarePropertyDefaultOutputDevice),current=AudioDeviceID(0),size=UInt32(MemoryLayout<AudioDeviceID>.size)
 _ = AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject),&a,0,nil,&size,&current)
-let data=try JSONSerialization.data(withJSONObject:["devices":outputs(),"current":current])
+func volumeAddress(_ element: UInt32) -> AudioObjectPropertyAddress { AudioObjectPropertyAddress(mSelector:kAudioDevicePropertyVolumeScalar,mScope:kAudioDevicePropertyScopeOutput,mElement:element) }
+func readable(_ element: UInt32) -> Float32? {
+ var a=volumeAddress(element),v:Float32=0,n=UInt32(MemoryLayout<Float32>.size)
+ return AudioObjectGetPropertyData(current,&a,0,nil,&n,&v)==noErr ? v : nil
+}
+if args.count==3 && args[1]=="volume",let percent=Float32(args[2]),percent>=0,percent<=100 {
+ var changed=false
+ for element:UInt32 in [0,1,2] {
+  var a=volumeAddress(element),settable:DarwinBoolean=false
+  if AudioObjectIsPropertySettable(current,&a,&settable)==noErr && settable.boolValue {
+   var value=percent/100
+   if AudioObjectSetPropertyData(current,&a,0,nil,UInt32(MemoryLayout<Float32>.size),&value)==noErr {changed=true}
+   if element==0 && changed {break}
+  }
+ }
+ if !changed {FileHandle.standardError.write(Data("This audio output has fixed volume.".utf8));exit(1)}
+}
+let values=[readable(0)].compactMap{$0},channels=[readable(1),readable(2)].compactMap{$0}
+let levels=values.isEmpty ? channels : values
+var result:[String:Any]=["devices":outputs(),"current":current]
+result["volume"]=levels.isEmpty ? NSNull() : Int((levels.reduce(0,+)/Float32(levels.count)*100).rounded()) as Any
+let data=try JSONSerialization.data(withJSONObject:result)
 FileHandle.standardOutput.write(data)
