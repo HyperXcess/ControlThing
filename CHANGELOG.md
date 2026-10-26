@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 — 2026-10-26
+
+Return from MusicThing to the remembered app or Spotify, avoiding landing/settings as accidental return destinations.
+
 ## 0.2.0 — 2026-10-26
 
 Larger PC Health, Focus, Brightness and Audio pages; next-three-event CalendarThing overview; adjustable focus duration; dial-engaged sliders; swipeable icon-and-label navigation; contextual MusicThing entry; and bounded USB reconnect recovery.
